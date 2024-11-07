@@ -16,14 +16,16 @@ export class EdicaoComponent implements OnInit{
   btnAcao = 'Editar';
   descTitulo = 'Edição de Tarefas';
   tarefa!: Tarefa;
+  id!: number;
 
   constructor(private tarefaService: TarefaService, private router: Router, private toastr: ToastrService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(id);
-    if (id) {
-      this.listarPorId(id);
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id) {
+      this.listarPorId(this.id);
+    }else{
+      this.toastr.error('Erro ao listar tarefa', 'Error');
     }
   }
 
@@ -35,7 +37,8 @@ export class EdicaoComponent implements OnInit{
         });
         this.router.navigate(['/']);
       },
-      error: () => {
+      error: (err) => {
+        console.log(err);
         this.toastr.error('Erro ao editar tarefa', 'Error', {
           timeOut: 3000,
         });

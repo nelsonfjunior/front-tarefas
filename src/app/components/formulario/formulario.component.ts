@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Tarefa } from '../../interface/Tarefa';
 import { RouterModule } from '@angular/router';
@@ -15,20 +15,43 @@ export class FormularioComponent implements OnInit{
   @Input() tarefa: Tarefa | null = null;
   @Input() descTitulo!: string;
   @Input() btnAcao!: string;
+  @Input() habilitado: boolean = false;
 
   tarefaForm!: FormGroup;
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tarefa'] && this.tarefa && this.tarefaForm) {
+      this.tarefaForm.patchValue({
+        id: this.tarefa.id,
+        nome: this.tarefa.nome,
+        custo: this.tarefa.custo,
+        dataLimite: this.tarefa.dataLimite,
+        ordemApresentacao: this.tarefa.ordemApresentacao
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.tarefaForm = new FormGroup({
-      nome: new FormControl(this.tarefa ? this.tarefa.nome : ''),
-      custo: new FormControl(this.tarefa ? this.tarefa.custo : ''),
-      dataLimite: new FormControl(this.tarefa ? this.tarefa.dataLimite : ''),
-      ordemApresentacao: new FormControl(this.tarefa ? this.tarefa.ordemApresentacao : '')
+      nome: new FormControl(''),
+      custo: new FormControl(''),
+      dataLimite: new FormControl(''),
+      ordemApresentacao: new FormControl({value: '', disabled: this.habilitado})
     });
+
+    if (this.tarefa) {
+      this.tarefaForm.patchValue({
+        nome: this.tarefa.nome,
+        custo: this.tarefa.custo,
+        dataLimite: this.tarefa.dataLimite,
+        ordemApresentacao: this.tarefa.ordemApresentacao
+      });
+    }
   }
 
   submit(){
-    this.onSubmit.emit(this.tarefaForm.value);
+    const tarefa = {...this.tarefa, ...this.tarefaForm.value};
+    this.onSubmit.emit(tarefa);
   }
 
 }

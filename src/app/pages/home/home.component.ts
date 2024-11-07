@@ -14,11 +14,47 @@ import { Router, RouterModule } from '@angular/router';
 export class HomeComponent implements OnInit{
   tarefas: Tarefa[] = [];
   tarefasGeral: Tarefa[] = [];
+  showConfirmDialog: boolean = false;
+  tarefaIdParaExcluir:number | null = null;
 
   constructor(private tarefaService: TarefaService, private toastr: ToastrService, private router: Router){}
 
   ngOnInit(): void {
     this.listarTarefas();
+  }
+
+  editarTarefa(tarefa: Tarefa): void {
+    this.router.navigate([`/edicao/${tarefa.id}`]);
+  }
+
+  solicitarConfirmacaoExclusao(id: number): void {
+    this.tarefaIdParaExcluir = id;
+    this.showConfirmDialog = true;
+  }
+
+  confirmDelete(): void {
+    if (this.tarefaIdParaExcluir !== null) {
+      this.tarefaService.deletar(this.tarefaIdParaExcluir).subscribe(
+        () => {
+          this.toastr.success('Tarefa excluída com sucesso!', 'Sucesso', {
+            timeOut: 3000,
+          });
+          this.listarTarefas();
+          this.cancelDelete();
+        },
+        (error) => {
+          this.toastr.error('Erro ao excluir tarefa', 'Erro', {
+            timeOut: 3000,
+          });
+          this.cancelDelete();
+        }
+      );
+    }
+  }
+
+  cancelDelete(): void {
+    this.showConfirmDialog = false;
+    this.tarefaIdParaExcluir = null;
   }
 
   listarTarefas(){
