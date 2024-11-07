@@ -18,8 +18,8 @@ export class TarefaService {
     return this.http.post<Tarefa>(`${this.ApiUrl}/salvar`, tarefa);
   }
 
-  editar(tarefa: Tarefa, id: number) : Observable<Tarefa> {
-    return this.http.put<Tarefa>(`${this.ApiUrl}/${id}`, tarefa);
+  editar(tarefa: Tarefa) : Observable<Tarefa> {
+    return this.http.put<Tarefa>(`${this.ApiUrl}/${tarefa.id}`, tarefa);
   }
 
   deletar(id: number) : Observable<void> {

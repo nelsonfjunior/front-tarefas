@@ -1,0 +1,38 @@
+<div class="mt-10 md:container md:mx-auto">
+  <h1 class="text-5xl font-extrabold dark:text-black mx-auto max-w-xl">{{descTitulo}}</h1>
+  <form class="my-10 max-w-xl mx-auto" [formGroup]="tarefaForm" (ngSubmit)="submit()" #formDit="ngForm">
+    <div class="mb-5">
+      <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nome</label>
+      <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nome da tarefa..." required formControlName="nome"/>
+    </div>
+    <div class="mb-5">
+      <label for="custo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Custo</label>
+      <input type="number" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Custo em reais" required formControlName="custo"/>
+    </div>
+
+    <div class="mb-5">
+      <label for="data" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Data limite</label>
+      <input type="date" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Insira a data limite" required formControlName="dataLimite"/>
+    </div>
+
+    <div class="mb-5">
+      <label for="ordem" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Ordem de apresentação</label>
+      <input type="number" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Insira a ordem de apresentação" required formControlName="ordemApresentacao"/>
+    </div>
+
+    <button
+    type="submit"
+    class="mt-5 w-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+  >
+    {{btnAcao}}
+  </button>
+  <button
+    routerLink="/"
+    type="submit"
+    class="mt-1 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+  >
+    Voltar
+  </button>
+  </form>
+</div>
+
