@@ -1,5 +1,9 @@
-<div class="md:container md:mx-auto">
-  <h1 class="text-5xl font-extrabold dark:text-black mx-auto max-w-xl text-center mt-5">Tarefas</h1>
+<div *ngIf="!isLoading" class="md:container md:mx-auto">
+  <h1
+    class="text-5xl font-extrabold dark:text-black mx-auto max-w-xl text-center mt-5"
+  >
+    Tarefas
+  </h1>
   <form class="p-3 max-w-md mx-auto mt-10">
     <div class="relative">
       <div
@@ -55,14 +59,22 @@
       </thead>
       <tbody cdkDropList (cdkDropListDropped)="drop($event)">
         @if (tarefas.length > 0) { @for (tarefa of tarefas; track $index) {
-        <tr [ngClass]="{ 'bg-yellow-50 dark:bg-yellow-500 text-gray-900 dark:text-gray-200': tarefa.custo >= 1000, 'bg-gray-800 dark:bg-gray-800 text-white-900 dark:text-gray-200' : tarefa.custo < 1000}" class="text-center border">
+        <tr
+          [ngClass]="{
+            'bg-yellow-50 dark:bg-yellow-500 text-gray-900 dark:text-gray-200':
+              tarefa.custo >= 1000,
+            'bg-gray-800 dark:bg-gray-800 text-white-900 dark:text-gray-200':
+              tarefa.custo < 1000
+          }"
+          class="text-center border"
+        >
           <th
             scope="row"
             class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
             {{ tarefa.nome }}
           </th>
-          <td class="px-5 py-4">{{ tarefa.custo | currency: 'BRL' }}</td>
+          <td class="px-5 py-4">{{ tarefa.custo | currency : "BRL" }}</td>
           <td class="px-5 py-4">
             {{ tarefa.dataLimite | date : "shortDate" }}
           </td>
@@ -80,19 +92,48 @@
             </a>
           </td>
           <td cdkDrag class="">
-            <svg class="cursor-grab w-full h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            <svg
+              class="cursor-grab w-full h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
             </svg>
           </td>
         </tr>
 
-        <div *ngIf="showConfirmDialog" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+        <div
+          *ngIf="showConfirmDialog"
+          class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50"
+        >
+          <div
+            class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center"
+          >
             <h2 class="text-lg font-semibold mb-4">Tem certeza?</h2>
-            <p class="text-gray-600 mb-6">Você não poderá desfazer essa ação!</p>
+            <p class="text-gray-600 mb-6">
+              Você não poderá desfazer essa ação!
+            </p>
             <div class="flex justify-center space-x-4">
-              <button (click)="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Sim, excluir</button>
-              <button (click)="cancelDelete()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancelar</button>
+              <button
+                (click)="confirmDelete()"
+                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Sim, excluir
+              </button>
+              <button
+                (click)="cancelDelete()"
+                class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

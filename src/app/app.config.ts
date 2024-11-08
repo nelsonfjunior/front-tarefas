@@ -6,7 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideToastr } from 'ngx-toastr';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 
@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimations(),
     provideToastr(),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideEnvironmentNgxMask(maskConfigFunction),
     {provide: LOCALE_ID, useValue: 'pt-br'},
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
