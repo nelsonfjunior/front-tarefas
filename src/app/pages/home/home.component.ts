@@ -68,7 +68,8 @@ export class HomeComponent implements OnInit{
         this.tarefasGeral = res;
         this.isLoading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.log(err);
         this.toastr.error('Erro ao listar tarefas', 'Error', {
           timeOut: 3000,
           });
