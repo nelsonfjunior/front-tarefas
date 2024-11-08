@@ -17,11 +17,13 @@ export class HomeComponent implements OnInit{
   tarefasGeral: Tarefa[] = [];
   showConfirmDialog: boolean = false;
   tarefaIdParaExcluir:number | null = null;
+  isLoading: boolean = true;
 
   constructor(private tarefaService: TarefaService, private toastr: ToastrService, private router: Router){}
 
   ngOnInit(): void {
     this.listarTarefas();
+
   }
 
   editarTarefa(tarefa: Tarefa): void {
@@ -59,10 +61,12 @@ export class HomeComponent implements OnInit{
   }
 
   listarTarefas(){
+    this.isLoading = true;
     this.tarefaService.listar().subscribe({
       next: (res) => {
         this.tarefas = res;
         this.tarefasGeral = res;
+        this.isLoading = false;
       },
       error: () => {
         this.toastr.error('Erro ao listar tarefas', 'Error', {
