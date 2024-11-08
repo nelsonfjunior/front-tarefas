@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Tarefa } from '../interface/Tarefa';
 import { Observable } from 'rxjs';
 
@@ -26,12 +26,20 @@ export class TarefaService {
     return this.http.delete<void>(`${this.ApiUrl}/${id}`);
   }
 
-  listar(): Observable<Tarefa[]>{
-    return this.http.get<Tarefa[]>(`${this.ApiUrl}/listar`);
+  listar(): Observable<Tarefa[]> {
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-store',
+      Pragma: 'no-cache'
+    });
+    return this.http.get<Tarefa[]>(`${this.ApiUrl}/listar`, { headers });
   }
 
-  listarPorId(id: number): Observable<Tarefa>{
-    return this.http.get<Tarefa>(`${this.ApiUrl}/${id}`);
+  listarPorId(id: number): Observable<Tarefa> {
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-store',
+      Pragma: 'no-cache'
+    });
+    return this.http.get<Tarefa>(`${this.ApiUrl}/${id}`, { headers });
   }
 
 
