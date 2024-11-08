@@ -1,0 +1,10 @@
+{
+  "routes": [
+    {
+      "src": "/tarefas/(.*)",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      }
+    }
+  ]
+}
