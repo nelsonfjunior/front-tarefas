@@ -1,21 +1,23 @@
+import { NgxMaskConfig } from './../../../../node_modules/ngx-mask/lib/ngx-mask.config.d';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Tarefa } from '../../interface/Tarefa';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
-  imports: [RouterModule,  FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterModule,  FormsModule, ReactiveFormsModule, CommonModule, NgxMaskDirective],
   templateUrl: './formulario.component.html',
+  providers: [provideNgxMask()],
 })
 export class FormularioComponent implements OnInit{
   @Output() onSubmit = new EventEmitter<Tarefa>();
   @Input() tarefa: Tarefa | null = null;
   @Input() descTitulo!: string;
   @Input() btnAcao!: string;
-  @Input() habilitado: boolean = false;
 
   tarefaForm!: FormGroup;
 
@@ -36,7 +38,6 @@ export class FormularioComponent implements OnInit{
       nome: new FormControl(''),
       custo: new FormControl(''),
       dataLimite: new FormControl(''),
-      ordemApresentacao: new FormControl({value: '', disabled: this.habilitado})
     });
 
     if (this.tarefa) {
@@ -44,7 +45,7 @@ export class FormularioComponent implements OnInit{
         nome: this.tarefa.nome,
         custo: this.tarefa.custo,
         dataLimite: this.tarefa.dataLimite,
-        ordemApresentacao: this.tarefa.ordemApresentacao
+        ordemApresentacao: 0
       });
     }
   }

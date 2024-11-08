@@ -4,11 +4,12 @@ import { TarefaService } from '../../service/tarefa.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, DragDropModule],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit{
@@ -79,6 +80,10 @@ export class HomeComponent implements OnInit{
     this.tarefas = this.tarefasGeral.filter(tarefa => {
       return tarefa.nome.toLowerCase().includes(value);
     })
+  }
+
+  drop(event: CdkDragDrop<Tarefa[]>) {
+    moveItemInArray(this.tarefas, event.previousIndex, event.currentIndex);
   }
 
 

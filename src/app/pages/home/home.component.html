@@ -1,5 +1,6 @@
 <div class="md:container md:mx-auto">
-  <form class="max-w-md mx-auto mt-10">
+  <h1 class="text-5xl font-extrabold dark:text-black mx-auto max-w-xl text-center mt-5">Tarefas</h1>
+  <form class="p-3 max-w-md mx-auto mt-10">
     <div class="relative">
       <div
         class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -49,9 +50,10 @@
           <th scope="col" class="px-6 py-3">Custo</th>
           <th scope="col" class="px-6 py-3">Data Limite</th>
           <th scope="col" class="px-6 py-3">Ações</th>
+          <th scope="col" class="px-6 py-3">Ajustar ordem</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
         @if (tarefas.length > 0) { @for (tarefa of tarefas; track $index) {
         <tr [ngClass]="{ 'bg-yellow-50 dark:bg-yellow-500 text-gray-900 dark:text-gray-200': tarefa.custo >= 1000, 'bg-gray-800 dark:bg-gray-800 text-white-900 dark:text-gray-200' : tarefa.custo < 1000}" class="text-center border">
           <th
@@ -60,7 +62,7 @@
           >
             {{ tarefa.nome }}
           </th>
-          <td class="px-5 py-4">R$ {{ tarefa.custo }}</td>
+          <td class="px-5 py-4">{{ tarefa.custo | currency: 'BRL' }}</td>
           <td class="px-5 py-4">
             {{ tarefa.dataLimite | date : "shortDate" }}
           </td>
@@ -76,6 +78,11 @@
             >
               Excluir
             </a>
+          </td>
+          <td cdkDrag class="">
+            <svg class="cursor-grab w-full h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
           </td>
         </tr>
 

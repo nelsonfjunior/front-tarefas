@@ -7,19 +7,13 @@
     </div>
     <div class="mb-5">
       <label for="custo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Custo</label>
-      <input type="number" id="custo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Custo em reais" required formControlName="custo"/>
+      <input type="text" id="custo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Custo em reais" required formControlName="custo" mask="separator.2" thousandSeparator="." decimalMarker=","/>
     </div>
 
     <div class="mb-5">
       <label for="data" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Data limite</label>
       <input type="date" id="data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Insira a data limite" required formControlName="dataLimite"/>
     </div>
-
-    <div class="mb-5">
-      <label for="ordem" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Ordem de apresentação</label>
-      <input type="number" id="ordem" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Insira a ordem de apresentação" required formControlName="ordemApresentacao"/>
-    </div>
-
     <button
     type="submit"
     class="mt-5 w-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"

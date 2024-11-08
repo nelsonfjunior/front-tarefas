@@ -16,6 +16,7 @@ export class EdicaoComponent implements OnInit{
   btnAcao = 'Editar';
   descTitulo = 'Edição de Tarefas';
   tarefa!: Tarefa;
+  tarefas: Tarefa[] = [];
   id!: number;
 
   constructor(private tarefaService: TarefaService, private router: Router, private toastr: ToastrService, private route: ActivatedRoute) {}
@@ -29,17 +30,41 @@ export class EdicaoComponent implements OnInit{
     }
   }
 
-  editarTarefa(tarefa: Tarefa){
-    this.tarefaService.editar(tarefa).subscribe({
+  editarTarefa(tarefa: Tarefa) {
+    this.tarefaService.listar().subscribe({
       next: (res) => {
-        this.toastr.success('Tarefa editada com sucesso', 'Sucesso', {
-          timeOut: 3000,
+        this.tarefas = res;
+
+        if(tarefa.nome === '' || tarefa.dataLimite === '' || tarefa.custo === null || tarefa.custo <= 0) {
+          this.toastr.warning('Campos obrigatórios não preenchidos', 'Error', {
+            timeOut: 3000,
+          });
+          return;
+        }
+
+        if (this.tarefas.some(t => t.nome === tarefa.nome && t.id !== tarefa.id)) {
+          this.toastr.warning('Tarefa já cadastrada', 'Error', {
+            timeOut: 3000,
+          });
+          return;
+        }
+        this.tarefaService.editar(tarefa).subscribe({
+          next: () => {
+            console.log(tarefa)
+            this.toastr.success('Tarefa cadastrada com sucesso', 'Sucesso', {
+              timeOut: 3000,
+            });
+            this.router.navigate(['/']);
+          },
+          error: () => {
+            this.toastr.error('Erro ao cadastrar tarefa', 'Error', {
+              timeOut: 3000,
+            });
+          }
         });
-        this.router.navigate(['/']);
       },
-      error: (err) => {
-        console.log(err);
-        this.toastr.error('Erro ao editar tarefa', 'Error', {
+      error: () => {
+        this.toastr.error('Erro ao listar tarefas', 'Error', {
           timeOut: 3000,
         });
       }
@@ -53,6 +78,19 @@ export class EdicaoComponent implements OnInit{
       },
       error: () => {
         this.toastr.error('Erro ao listar tarefa', 'Error', {
+          timeOut: 3000,
+        });
+      }
+    });
+  }
+
+  listarTarefas(){
+    this.tarefaService.listar().subscribe({
+      next: (res) => {
+        this.tarefas = res;
+      },
+      error: () => {
+        this.toastr.error('Erro ao listar tarefas', 'Error', {
           timeOut: 3000,
         });
       }

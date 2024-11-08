@@ -15,19 +15,59 @@ import { CommonModule } from '@angular/common';
 export class CadastroComponent {
   btnAcao = 'Cadastrar';
   descTitulo = 'Cadastro de Tarefas';
+  tarefas: Tarefa[] = [];
 
   constructor(private tarefaService: TarefaService, private router: Router, private toastr: ToastrService) {}
 
-  criarUsuario(tarefa: Tarefa){
-    this.tarefaService.salvar(tarefa).subscribe({
+  criarTarefa(tarefa: Tarefa) {
+    this.tarefaService.listar().subscribe({
       next: (res) => {
-        this.toastr.success('Tarefa cadastrada com sucesso', 'Sucesso', {
-          timeOut: 3000,
+        this.tarefas = res;
+
+        if(tarefa.nome === '' || tarefa.dataLimite === '' || tarefa.custo === null || tarefa.custo <= 0) {
+          this.toastr.warning('Campos obrigatórios não preenchidos', 'Error', {
+            timeOut: 3000,
+          });
+          return;
+        }
+
+        if (this.tarefas.some(t => t.nome === tarefa.nome)) {
+          this.toastr.warning('Tarefa já cadastrada', 'Error', {
+            timeOut: 3000,
+          });
+          return;
+        }
+        tarefa.ordemApresentacao = this.tarefas.length + 1;
+        this.tarefaService.salvar(tarefa).subscribe({
+          next: () => {
+            console.log(tarefa)
+            this.toastr.success('Tarefa cadastrada com sucesso', 'Sucesso', {
+              timeOut: 3000,
+            });
+            this.router.navigate(['/']);
+          },
+          error: () => {
+            this.toastr.error('Erro ao cadastrar tarefa', 'Error', {
+              timeOut: 3000,
+            });
+          }
         });
-        this.router.navigate(['/']);
       },
       error: () => {
-        this.toastr.error('Erro ao cadastrar tarefa', 'Error', {
+        this.toastr.error('Erro ao listar tarefas', 'Error', {
+          timeOut: 3000,
+        });
+      }
+    });
+  }
+
+  listarTarefas(){
+    this.tarefaService.listar().subscribe({
+      next: (res) => {
+        this.tarefas = res;
+      },
+      error: () => {
+        this.toastr.error('Erro ao listar tarefas', 'Error', {
           timeOut: 3000,
         });
       }
